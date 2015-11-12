@@ -1,0 +1,16 @@
+<?php $letters = range('A', 'Z'); ?>
+<?php foreach ($letters as $alpha) : ?>
+    <a href="<?= $this->url('market-city-list') . '/' . $alpha ?>"><?= $alpha ?></a>&nbsp;
+<?php endforeach; ?>
+<hr>
+<div style="margin-left: 300px;">
+<?php if ($this->list) : ?>
+    <?php foreach ($this->list as $city) : ?>
+    <div style="width: 200px; float: left;">
+    <a href="<?= $this->url('market-city') . '/' . $city->city ?>"><?= $city->city ?></a>
+    </div>
+    <?php endforeach; ?>
+<?php else : ?>
+Sorry! No cities listed!
+<?php endif; ?>
+</div>

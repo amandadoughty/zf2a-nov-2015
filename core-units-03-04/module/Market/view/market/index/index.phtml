@@ -1,0 +1,45 @@
+<div class="span7">
+<style>
+th {
+	text-align: right;
+}
+</style>
+<?php if ($this->messages) : ?>
+	<b><i style="color: green;"><?php echo implode('<br />', $this->messages); ?></i></b>
+<?php endif; ?>
+<h2><?php echo $this->translate('Most Recent Listing') ?></h2>
+<p>
+<?php if ($this->latest) : ?>
+	<h3><i><?php echo $this->escapeHtml($this->latest->title); ?></i></h3>
+	<table width="60%" cellspacing="5px" cellpadding="5px">
+	<tr>
+	<td><h4>$<?php echo number_format($this->latest->price,2); ?></h4></td>
+	<td><h4><?php echo $this->escapeHtml($this->latest->city); ?></h4></td>
+	<td><h4><?php echo $this->escapeHtml($this->latest->country); ?></h4></td>
+	</tr>
+	</table>
+	<hr />
+	<div class="listingImage">
+	<?php $photoFilename = $this->escapeHtml($this->latest->photo_filename); ?>
+	<?php if (stripos($photoFilename, 'http:') === FALSE) $photoFilename = $this->basePath() . $photoFilename; ?>
+	<img src="<?php echo  $photoFilename; ?>" />
+	</div>
+	<?php echo $this->escapeHtml($this->latest->description); ?>
+	<hr />
+	<table width="100%" cellspacing="5px" cellpadding="5px">
+	<tr>
+	<th>Category</th><td><?php echo $this->escapeHtml($this->latest->category); ?></td>
+	<th>Posted</th><td><?php echo $this->escapeHtml($this->latest->date_created); ?></td>
+	<th>Expires</th><td><?php echo $this->escapeHtml($this->latest->date_expires); ?></td>
+	</tr>
+	<tr>
+	<th>Name</th><td><?php echo $this->escapeHtml($this->latest->contact_name); ?></td>
+	<th>Phone</th><td><?php echo $this->escapeHtml($this->latest->contact_phone); ?></td>
+	<th>Email</th><td><?php echo $this->escapeHtml($this->latest->contact_email); ?></td>
+	</tr>
+	</table>
+<?php else : ?>
+  	No Listings!
+<?php endif; ?>
+</p>
+</div>

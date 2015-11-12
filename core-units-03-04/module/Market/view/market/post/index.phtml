@@ -1,0 +1,70 @@
+<div class="span8">
+<table width="100%">
+<tr><td valign="TOP">
+	<p>
+	<?php
+	$form = $this->postForm;
+	$form->prepare();
+	$form->setAttribute('action', $this->url('market-post'));
+	$form->setAttribute('method', 'POST');
+	echo $this->form()->openTag($form);
+	?>
+	<table width="60%">
+	<?php if ($this->messages) : ?>
+		<tr>
+			<td colspan=3>
+				<b><i style="color: red;"><?php echo implode('<br />', $this->messages); ?></i></b>
+			</td>
+		</tr>
+	<?php endif; ?>
+	<!--  Using custom view helpers in Application\Helper\* -->
+	<?php echo $this->elementToRow($form->get('category')); ?>
+	<?php echo $this->elementToRow($form->get('title')); ?>
+	<?php echo $this->elementToRow($form->get('price')); ?>
+	<?php echo $this->elementToRow($form->get('photo')); ?>
+	<?php echo $this->elementToRow($form->get('cityCode')); ?>
+	<?php echo $this->radioElementToRow($form->get('expires'), 0); ?>
+	<?php echo $this->elementToRow($form->get('name')); ?>
+	<?php echo $this->elementToRow($form->get('phone')); ?>
+	<?php echo $this->elementToRow($form->get('email')); ?>
+	</table>
+	</p>
+</td>
+<td valign="TOP">
+	<?php $description = $form->get('description'); ?>
+	<?php echo $this->formLabel($description); ?>
+	<?php echo $this->formElement($description); ?>
+	<?php $descriptionErrors = $this->formElementErrors($description); ?>
+	<span class="form-errors">
+	<?php echo $descriptionErrors; ?>
+	</span>
+	<br />
+	<?php $delCode = $form->get('delCode'); ?>
+	<?php echo $this->formLabel($delCode); ?>
+	<?php echo $this->formElement($delCode); ?>
+	<?php $delCodeErrors = $this->formElementErrors($delCode); ?>
+	<span class="form-errors">
+	<?php echo $delCodeErrors; ?>
+	</span>
+	<br />
+	<?php $captcha = $form->get('captcha'); ?>
+	<?php //echo $this->formLabel($captcha); ?>
+	<?php echo $this->formElement($captcha); ?>
+	<?php $captchaErrors = $this->formElementErrors($captcha); ?>
+	<span class="form-errors">
+	<?php echo $captchaErrors; ?>
+	</span>
+	<p>&nbsp;</p>
+	<?php echo $this->formSubmit($form->get('submit')); ?>
+	<?php echo $this->form()->closeTag($form); ?>
+	<p>&nbsp;</p>
+	<p>
+	Form Data Submitted:
+	<pre>
+	<?php var_dump($this->data); ?>
+	</pre>
+	</p>
+</td>
+</tr>
+</table>
+</div>

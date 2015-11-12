@@ -1,0 +1,74 @@
+<div class="span7">
+<style>
+th {
+	text-align: right;
+}
+</style>
+<h2><?php echo $this->translate('Delete Listing?') ?></h2>
+<p>
+<?php
+$form = $this->deleteForm;
+$form->prepare();
+$form->setAttribute('action', $this->url('market-delete-confirm'));
+$form->setAttribute('method', 'POST');
+echo $this->form()->openTag($form);
+?>
+<table width="60%">
+<?php echo $this->elementToRow($form->get('delCode')); ?>
+<tr>
+	<td colspan=2>&nbsp;</td>
+	<td>
+		<?php $captcha = $form->get('captcha'); ?>
+		<?php echo $this->formElement($captcha); ?>
+		<?php $captchaErrors = $this->formElementErrors($captcha); ?>
+		<span class="form-errors">
+		<?php echo $captchaErrors; ?>
+		</span>
+	</td>
+</tr>
+<tr>
+	<td colspan=2>&nbsp;</td>
+	<td>
+	<?php echo $this->formButton($form->get('submit')); ?>
+	<?php echo $this->formButton($form->get('cancel')); ?>
+	<?php //echo $this->formHidden($form->get('id')); // doesn't work?>
+	<input type="hidden" name="id" value="<?php echo (int) $this->id; ?>" />
+	</td>
+</tr>
+</table>
+<?php echo $this->form()->closeTag(); ?>
+</p>
+<p>
+<?php if ($this->item) : ?>
+	<h3><i><?php echo $this->escapeHtml($this->item->title); ?></i></h3>
+	<table width="60%" cellspacing="5px" cellpadding="5px">
+	<tr>
+	<td><h4>$<?php echo number_format($this->item->price,2); ?></h4></td>
+	<td><h4><?php echo $this->escapeHtml($this->item->city); ?></h4></td>
+	<td><h4><?php echo $this->escapeHtml($this->item->country); ?></h4></td>
+	<td><a href="<?php echo $this->basePath(); ?>/market/delete/<?php echo (int) $this->item->listings_id; ?>">Delete</a></td>
+	</tr>
+	</table>
+	<hr />
+	<div class="listingImage">
+	<img src="<?php echo $this->basePath() . $this->escapeHtml($this->item->photo_filename); ?>" />
+	</div>
+	<?php echo $this->escapeHtml($this->item->description); ?>
+	<hr />
+	<table width="100%" cellspacing="5px" cellpadding="5px">
+	<tr>
+	<th>Category</th><td><?php echo $this->escapeHtml($this->item->category); ?></td>
+	<th>Posted</th><td><?php echo $this->escapeHtml($this->item->date_created); ?></td>
+	<th>Expires</th><td><?php echo $this->escapeHtml($this->item->date_expires); ?></td>
+	</tr>
+	<tr>
+	<th>Name</th><td><?php echo $this->escapeHtml($this->item->contact_name); ?></td>
+	<th>Phone</th><td><?php echo $this->escapeHtml($this->item->contact_phone); ?></td>
+	<th>Email</th><td><?php echo $this->escapeHtml($this->item->contact_email); ?></td>
+	</tr>
+	</table>
+<?php else : ?>
+  	Unable to find listing!
+<?php endif; ?>
+</p>
+</div>

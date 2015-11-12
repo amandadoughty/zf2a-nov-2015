@@ -1,0 +1,43 @@
+<div class="span7">
+<style>
+th {
+	text-align: right;
+}
+</style>
+<h2><?php echo $this->translate('View Listing') ?></h2>
+<p>
+<?php if ($this->item) : ?>
+	<h3><i><?php echo $this->escapeHtml($this->item->title); ?></i></h3>
+	<table width="60%" cellspacing="5px" cellpadding="5px">
+	<tr>
+	<td><h4>$<?php echo number_format($this->item->price,2); ?></h4></td>
+	<td><h4><?php echo $this->escapeHtml($this->item->city); ?></h4></td>
+	<td><h4><?php echo $this->escapeHtml($this->item->country); ?></h4></td>
+	<td><a href="<?php echo $this->basePath(); ?>/market/delete/<?php echo (int) $this->item->listings_id; ?>">Delete</a></td>
+	</tr>
+	</table>
+	<hr />
+	<div class="listingImage">
+	<?php $photoFilename = $this->escapeHtml($this->item->photo_filename); ?>
+	<?php if (stripos($photoFilename, 'http:') === FALSE) $photoFilename = $this->basePath() . $photoFilename; ?>
+	<img src="<?php echo  $photoFilename; ?>" />
+	</div>
+	<?php echo $this->escapeHtml($this->item->description); ?>
+	<hr />
+	<table width="100%" cellspacing="5px" cellpadding="5px">
+	<tr>
+	<th>Category</th><td><?php echo $this->escapeHtml($this->item->category); ?></td>
+	<th>Posted</th><td><?php echo $this->escapeHtml($this->item->date_created); ?></td>
+	<th>Expires</th><td><?php echo $this->escapeHtml($this->item->date_expires); ?></td>
+	</tr>
+	<tr>
+	<th>Name</th><td><?php echo $this->escapeHtml($this->item->contact_name); ?></td>
+	<th>Phone</th><td><?php echo $this->escapeHtml($this->item->contact_phone); ?></td>
+	<th>Email</th><td><?php echo $this->escapeHtml($this->item->contact_email); ?></td>
+	</tr>
+	</table>
+<?php else : ?>
+  	Unable to find listing!
+<?php endif; ?>
+</p>
+</div>
