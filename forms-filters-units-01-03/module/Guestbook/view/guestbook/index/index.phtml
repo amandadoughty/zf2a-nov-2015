@@ -1,0 +1,66 @@
+<style>
+td {
+	border: thin solid gray;
+}
+</style>
+<section>
+    <h1>Guestbook</h1>
+
+    <section>
+        <h1>Create a new entry</h1>
+
+        <?php
+        $form = $this->entryForm;
+        $form->setAttribute('action', $this->url('guestbook'));
+        $form->setAttribute('method', 'post');
+        $form->prepare();
+        ?>
+
+        <?php echo $this->form()->openTag($form) ?>
+        <dl>
+            <dt><?php
+            $name = $form->get('name');
+            echo $this->formLabel($name); ?></dt>
+            <dd><?php echo $this->formText($name) . $this->formElementErrors($name); ?></dd>
+
+            <dt><?php echo $this->formLabel($form->get('email')); ?></dt>
+            <dd><?php echo $this->formEmail($form->get('email')) . $this->formElementErrors($form->get('email')); ?></dd>
+
+            <dt><?php echo $this->formLabel($form->get('website')); ?></dt>
+            <dd><?php echo $this->formText($form->get('website')) . $this->formElementErrors($form->get('website')); ?></dd>
+
+            <dt><?php echo $this->formLabel($form->get('message')); ?></dt>
+            <dd><?php echo $this->formTextarea($form->get('message')) . $this->formElementErrors($form->get('message')); ?></dd>
+
+            <dt><?php echo $this->formLabel($form->get('captcha')); ?></dt>
+            <dd><?php echo $this->formCaptcha($form->get('captcha')) . $this->formElementErrors($form->get('captcha')); ?></dd>
+
+            <?php echo $this->formHidden($form->get('csrf')); ?>
+
+            <dd><?php echo $this->formSubmit($form->get('submit')); ?></dd>
+        </dl>
+        <?php echo $this->form()->closeTag() ?>
+    </section>
+
+    <section>
+        <h1>All recent entries</h1>
+        <table style="width: 500px;">
+        <tr><th>Name</th><th>Email</th><th>Website</th><th>Message</th></tr>
+        <?php foreach ($this->entries as $entry): ?>
+            <?php echo $this->htmlTableRow(array($entry->getName(),$entry->getEmail(),$entry->getWebsite(), $entry->getMessage())); ?>
+        	<?php /*
+            <article>
+                <h1>
+                    <a href="mailto:<?php echo $this->escapeHtml($entry->getEmail()); ?>"><?php echo $this->escapeHtml($entry->getName()); ?></a>
+                    (<a href="<?php echo $this->escapeHtml($entry->getWebsite()); ?>" target="_blank"><?php echo $this->escapeHtml($entry->getWebsite()); ?></a>)
+                </h1>
+
+                <p>
+                    <?php echo nl2br($this->escapeHtml($entry->getMessage())); ?>
+                </p>
+            </article>
+            */ ?>
+        <?php endforeach; ?>
+        </table>
+    </section>
+</section>
