@@ -2,6 +2,7 @@
 namespace Guestbook;
 
 use Application\Service\AppService;
+use Guestbook\Form\Base;
 use Zend\ModuleManager\ModuleManager;
 use Zend\EventManager\EventInterface;
 use Zend\Stdlib\Hydrator\ClassMethods;
@@ -56,10 +57,13 @@ class Module implements
                     return $form;
                 },
                 */
+                'guestbook_form_base' => function ($sm) {
+                    return new Base($sm->get('captcha_options'));
+                },
                 'guestbook_entry_form' => function ($sm) {
                     $builder = new AnnotationBuilder();
                     $form = $builder->createForm(new Entity\Entry);
-                    $form->add(new Base);
+                    $form->add($sm->get('guestbook_form_base'));
                     return $form;
                 },
             ),

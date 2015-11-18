@@ -19,6 +19,7 @@ class Entry
     * @Annotation\Attributes({"type":"text"})
     * @Annotation\Options({"label":"Name"})
     * @Annotation\Filter({"name":"StringTrim"})
+    * @Annotation\Filter({"name":"StripTags"})
     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":255}})
     */
    protected $name;

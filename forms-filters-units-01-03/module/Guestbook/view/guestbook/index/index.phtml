@@ -32,12 +32,12 @@ td {
             <dt><?php echo $this->formLabel($form->get('message')); ?></dt>
             <dd><?php echo $this->formTextarea($form->get('message')) . $this->formElementErrors($form->get('message')); ?></dd>
 
-            <dt><?php echo $this->formLabel($form->get('captcha')); ?></dt>
-            <dd><?php echo $this->formCaptcha($form->get('captcha')) . $this->formElementErrors($form->get('captcha')); ?></dd>
+            <dt><?php echo $this->formLabel($form->get('base')->get('captcha')); ?></dt>
+            <dd><?php echo $this->formCaptcha($form->get('base')->get('captcha')) . $this->formElementErrors($form->get('captcha')); ?></dd>
 
-            <?php echo $this->formHidden($form->get('csrf')); ?>
+            <?php echo $this->formHidden($form->get('base')->get('csrf')); ?>
 
-            <dd><?php echo $this->formSubmit($form->get('submit')); ?></dd>
+            <dd><?php echo $this->formSubmit($form->get('base')->get('submit')); ?></dd>
         </dl>
         <?php echo $this->form()->closeTag() ?>
     </section>
