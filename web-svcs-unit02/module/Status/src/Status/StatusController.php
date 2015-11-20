@@ -23,6 +23,7 @@ class StatusController extends AbstractRestfulController
     public function __construct(TableGateway $table)
     {
         $this->table = $table;
+        $this->model = new JsonModel();
     }
 
     public function createIdentifier()
@@ -170,6 +171,21 @@ class StatusController extends AbstractRestfulController
      */
     public function getList()
     {
+        try {
+            $resultSet = $this->table->select()->toArray();
+            if (0 == count($resultSet)) {
+                throw new Exception();
+            }
+        } catch (\Exception $e) {
+            $response = $this->getResponse();
+            $response->setStatusCode(500);
+            $this->model->setVariables(array(
+                'message' => 'Database error',
+            ));
+            return false;
+        }
+        $jsonModel = new JsonModel(['statuses' => $resultSet]);
+        return $jsonModel;
     }
 
     /**
@@ -194,6 +210,35 @@ class StatusController extends AbstractRestfulController
      */
     public function patch($id, $data)
     {
+        $status = $this->fetch($id);
+        $response = $this->getResponse();
+        if ($status === FALSE) {
+            $response->setStatusCode(400);
+            $this->model->setVariables(array(
+                'message' => 'ID not found',
+            ));
+            return $this->model;
+        }
+        
+        $text = (isset($data['text'])) ? $data['text'] : FALSE;
+        if ($text === FALSE) {
+            $response->setStatusCode(400);
+            $this->model->setVariables(array(
+                'message' => 'No text to update',
+            ));
+            return $this->model;
+        }
+        
+        try {
+            $this->table->update(['text' => $text],['id' => $id]);
+        } catch (\Exception $e) {
+            $response->setStatusCode(500);
+            $this->model->setVariables(array(
+                'message' => 'Database error',
+            ));
+            return false;
+        }
+        return $this->get($id);
     }
     
     /**

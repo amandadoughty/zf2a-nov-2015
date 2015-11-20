@@ -21,6 +21,5 @@ return array(
     ),
 
     // Your task: enable the ViewJsonStrategy here:
-    'view_manager' => array(
-    ),
+    'view_manager' => array('strategies' => ['ViewJsonStrategy']),
 );
